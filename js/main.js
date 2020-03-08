@@ -2,7 +2,7 @@ var sidebar = new ol.control.Sidebar({ element: 'sidebar', position: 'right' });
 
 function pointStyleFunction(f) {
   var p = f.getProperties(), color, stroke, radius;
-p = p.properties;
+  p = p.properties;
   if(f === currentFeature) {
     stroke = new ol.style.Stroke({
       color: '#000',
@@ -169,7 +169,7 @@ $('#btn-geolocation').click(function () {
   return false;
 });
 
-var getPoints = function(lng, lat) {
+var getPoints = function() {
   var lonLat = ol.proj.toLonLat(currentCenter);
   $.getJSON('https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat=' + lonLat[1] + '&lng=' + lonLat[0] + '&m=10000', {}, function(c) {
     var features = [];
