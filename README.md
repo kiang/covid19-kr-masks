@@ -8,3 +8,11 @@ As South Korea government provides an API for real time stock information of fac
 
 1. [corona19-masks API](https://app.swaggerhub.com/apis/Promptech/public-mask-info/20200307)
 2. [Administrative areas of South Korea](https://github.com/southkorea/southkorea-maps)
+
+## Credits
+
+1. Most of the information was provided by [FtO](https://g0v.hackmd.io/@pm5/rJriRnlqE/%2FbpFogRpfRj-7QcTXnX5ZEw?type=book) members in South Korea
+
+## Notices
+
+1. Please use English if you want to report any bug/issue here as I don't know Korean at all.
