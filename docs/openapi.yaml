@@ -1,0 +1,264 @@
+openapi: 3.0.0
+info:
+  title: 공적 마스크 판매 현황 조회 API
+  description: 공적마스크 판매처 및 재고 현황 조회 API 서비스<br/>https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1
+  version: 20200307-oas3
+servers:
+- url: https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1
+paths:
+  /stores/json:
+    get:
+      tags:
+      - v1
+      description: 약국, 우체국, 농협 등의 마스크 판매처 정보 제공 (마스크 수랑 관련 정보는 제공하지 않음)
+      parameters:
+      - name: page
+        in: query
+        description: 페이지 번호
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      responses:
+        "200":
+          description: default
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreResult'
+  /sales/json:
+    get:
+      tags:
+      - v1
+      description: 마스크 잔여 수랑 등의 판매 정보 제공(판매처 관련 정보는 제공하지 않음)
+      parameters:
+      - name: page
+        in: query
+        description: 페이지 번호
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      responses:
+        "200":
+          description: default
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaleResult'
+  /storesByGeo/json:
+    get:
+      tags:
+      - v1
+      description: 중심 좌표(위/경도)를 기준으로 반경(미터단위) 안에 존재하는 판매처 및 마스크 수량 정보 제공
+      parameters:
+      - name: lat
+        in: query
+        description: 위도(wgs84 좌표계) / 최소:33.0, 최대:43.0
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: float
+      - name: lng
+        in: query
+        description: 경도(wgs84 표준) / 최소:124.0, 최대:132.0
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: float
+      - name: m
+        in: query
+        description: 반경(미터) / 최대 10000(10km)까지 조회 가능
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 10000
+          type: integer
+      responses:
+        "200":
+          description: default
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreSaleResult'
+components:
+  schemas:
+    Store:
+      required:
+      - addr
+      - code
+      - lat
+      - lng
+      - name
+      properties:
+        code:
+          type: string
+          description: 식별 코드
+        name:
+          type: string
+          description: 이름
+        addr:
+          type: string
+          description: 주소
+        lat:
+          type: number
+          description: 위도
+          format: float
+        lng:
+          type: number
+          description: 경도
+          format: float
+    Sale:
+      required:
+      - code
+      - created_at
+      - remain_cnt
+      - sold_cnt
+      - sold_out
+      - stock_cnt
+      - stock_t
+      properties:
+        code:
+          type: string
+          description: 식별 코드
+        stock_t:
+          type: string
+          description: 입고시간
+          format: HH:mm
+        stock_cnt:
+          type: integer
+          description: 입고 수량
+        sold_cnt:
+          type: integer
+          description: 판매 수량
+        remain_cnt:
+          type: integer
+          description: 재고 수량
+        sold_out:
+          type: boolean
+          description: 완판 여부(true 일경우 판매 종료)
+        created_at:
+          type: string
+          description: 데이터 생성 일자
+          format: YYYY/MM/DD HH:mm:ss
+    StoreSale:
+      required:
+      - addr
+      - code
+      - created_at
+      - lat
+      - lng
+      - name
+      - remain_cnt
+      - sold_cnt
+      - sold_out
+      - stock_cnt
+      - stock_t
+      - type
+      properties:
+        code:
+          type: string
+          description: 식별 코드
+        name:
+          type: string
+          description: 이름
+        addr:
+          type: string
+          description: 주소
+        lat:
+          type: number
+          description: 위도
+          format: float
+        lng:
+          type: number
+          description: 경도
+          format: float
+        stock_t:
+          type: string
+          description: 입고시간
+          format: HH:mm
+        stock_cnt:
+          type: integer
+          description: 입고 수량
+        sold_cnt:
+          type: integer
+          description: 판매 수량
+        remain_cnt:
+          type: integer
+          description: 재고 수량
+        sold_out:
+          type: boolean
+          description: 완판 여부(true 일경우 판매 종료)
+        created_at:
+          type: string
+          description: 데이터 생성 일자
+          format: YYYY/MM/DD HH:mm:ss
+    StoreResult:
+      required:
+      - count
+      - page
+      - storeInfos
+      - totalCount
+      - totalPages
+      properties:
+        totalPages:
+          type: integer
+          format: int64
+        totalCount:
+          type: integer
+          format: int64
+        page:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        storeInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Store'
+    SaleResult:
+      required:
+      - count
+      - page
+      - sales
+      - totalCount
+      - totalPages
+      properties:
+        totalPages:
+          type: integer
+          format: int64
+        totalCount:
+          type: integer
+          format: int64
+        page:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        sales:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sale'
+    StoreSaleResult:
+      required:
+      - count
+      - stores
+      properties:
+        count:
+          type: integer
+          format: int64
+        stores:
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreSale'
