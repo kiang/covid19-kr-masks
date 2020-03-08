@@ -2,6 +2,7 @@ var sidebar = new ol.control.Sidebar({ element: 'sidebar', position: 'right' });
 
 function pointStyleFunction(f) {
   var p = f.getProperties(), color, stroke, radius;
+p = p.properties;
   if(f === currentFeature) {
     stroke = new ol.style.Stroke({
       color: '#000',
