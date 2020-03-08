@@ -206,6 +206,7 @@ $.getJSON('json/skorea-list.json', {}, function(c) {
     currentCenter = ol.proj.fromLonLat([areas.provinces[codeSelected].lng, areas.provinces[codeSelected].lat]);
     appView.setCenter(currentCenter);
     getPoints();
+    sidebar.close();
   });
 
   options = '<option></option>';
@@ -217,6 +218,7 @@ $.getJSON('json/skorea-list.json', {}, function(c) {
     currentCenter = ol.proj.fromLonLat([areas.municipalities[codeSelected].lng, areas.municipalities[codeSelected].lat]);
     appView.setCenter(currentCenter);
     getPoints();
+    sidebar.close();
   });
 
 });
