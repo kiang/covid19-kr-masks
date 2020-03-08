@@ -186,4 +186,39 @@ var getPoints = function() {
   });
 }
 
+var areas = {};
+$.getJSON('json/skorea-list.json', {}, function(c) {
+  areas = c;
+
+  var options = '<option></option>';
+  for(k in areas.provinces) {
+    options += '<option value="' + k + '">' + areas.provinces[k].name + ' - ' + areas.provinces[k].name_eng + '</option>';
+  }
+  $('select#selectProvince').html(options).change(function() {
+    var codeSelected = $(this).val();
+    var options = '<option></option>';
+    for(k in areas.municipalities) {
+      if(k.substr(0, 2) === codeSelected) {
+        options += '<option value="' + k + '">' + areas.municipalities[k].name + ' - ' + areas.municipalities[k].name_eng + '</option>';
+      }
+      $('select#selectCity').html(options);
+    }
+    currentCenter = ol.proj.fromLonLat([areas.provinces[codeSelected].lng, areas.provinces[codeSelected].lat]);
+    appView.setCenter(currentCenter);
+    getPoints();
+  });
+
+  options = '<option></option>';
+  for(k in areas.municipalities) {
+    options += '<option value="' + k + '">' + areas.municipalities[k].name + ' - ' + areas.municipalities[k].name_eng + '</option>';
+  }
+  $('select#selectCity').html(options).change(function() {
+    var codeSelected = $(this).val();
+    currentCenter = ol.proj.fromLonLat([areas.municipalities[codeSelected].lng, areas.municipalities[codeSelected].lat]);
+    appView.setCenter(currentCenter);
+    getPoints();
+  });
+
+});
+
 getPoints();
