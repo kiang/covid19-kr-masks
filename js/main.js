@@ -110,9 +110,15 @@ map.on('singleclick', function(evt) {
   });
 });
 
-map.on('moveend', function(evt) {
-  currentCenter = appView.getCenter();
-  getPoints();
+map.once('rendercomplete', function() {
+  if(window.location.hash === '') {
+    var lonLat = ol.proj.toLonLat(appView.getCenter());
+    window.location.hash = '#' + lonLat[0].toString() + '/' + lonLat[1].toString();
+  }
+  map.on('moveend', function(evt) {
+    var lonLat = ol.proj.toLonLat(appView.getCenter());
+    window.location.hash = '#' + lonLat[0].toString() + '/' + lonLat[1].toString();
+  })
 })
 
 var geolocation = new ol.Geolocation({
@@ -145,9 +151,9 @@ geolocation.on('change:position', function() {
   var coordinates = geolocation.getPosition();
   positionFeature.setGeometry(coordinates ? new ol.geom.Point(coordinates) : null);
   if(false === firstPosDone) {
-    currentCenter = coordinates;
-    getPoints();
-    appView.setCenter(coordinates);
+    if(window.location.hash === '') {
+      appView.setCenter(coordinates);
+    }
     firstPosDone = true;
   }
 });
@@ -169,23 +175,6 @@ $('#btn-geolocation').click(function () {
   return false;
 });
 
-var getPoints = function() {
-  var lonLat = ol.proj.toLonLat(currentCenter);
-  $.getJSON('https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat=' + lonLat[1] + '&lng=' + lonLat[0] + '&m=10000', {}, function(c) {
-    var features = [];
-    var vSource = vectorPoints.getSource();
-    vSource.clear();
-    for(k in c.stores) {
-      var f = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([c.stores[k].lng, c.stores[k].lat])),
-        properties: c.stores[k]
-      });
-      features.push(f);
-    }
-    vSource.addFeatures(features);
-  });
-}
-
 var areas = {};
 $.getJSON('json/skorea-list.json', {}, function(c) {
   areas = c;
@@ -203,9 +192,7 @@ $.getJSON('json/skorea-list.json', {}, function(c) {
       }
       $('select#selectCity').html(options);
     }
-    currentCenter = ol.proj.fromLonLat([areas.provinces[codeSelected].lng, areas.provinces[codeSelected].lat]);
-    appView.setCenter(currentCenter);
-    getPoints();
+    appView.setCenter(ol.proj.fromLonLat([areas.provinces[codeSelected].lng, areas.provinces[codeSelected].lat]));
     sidebar.close();
   });
 
@@ -215,12 +202,28 @@ $.getJSON('json/skorea-list.json', {}, function(c) {
   }
   $('select#selectCity').html(options).change(function() {
     var codeSelected = $(this).val();
-    currentCenter = ol.proj.fromLonLat([areas.municipalities[codeSelected].lng, areas.municipalities[codeSelected].lat]);
-    appView.setCenter(currentCenter);
-    getPoints();
+    appView.setCenter(ol.proj.fromLonLat([areas.municipalities[codeSelected].lng, areas.municipalities[codeSelected].lat]));
     sidebar.close();
   });
 
 });
 
-getPoints();
+
+
+var showPoints = function(lng, lat) {
+  $.getJSON('https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat=' + lat + '&lng=' + lng + '&m=10000', {}, function(c) {
+    var features = [];
+    var vSource = vectorPoints.getSource();
+    vSource.clear();
+    for(k in c.stores) {
+      var f = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.fromLonLat([c.stores[k].lng, c.stores[k].lat])),
+        properties: c.stores[k]
+      });
+      features.push(f);
+    }
+    vSource.addFeatures(features);
+  });
+}
+
+routie(':lng/:lat', showPoints);
