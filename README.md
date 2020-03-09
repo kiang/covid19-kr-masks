@@ -26,9 +26,9 @@ The information is for reference only. It may not the same as the real number in
 
 提供的資訊僅供參考，實際上還是以個別單位現場的庫存為主，但是這樣的資訊可以作為採購的參考，避免花太多時間去尋找可以購買口罩的地方。
 
-*1. 藥局口罩採購地圖 - https://kiang.github.io/pharmacies/
-*2. FtO - https://g0v.hackmd.io/@pm5/rJriRnlqE/%2FbpFogRpfRj-7QcTXnX5ZEw?type=book
-*3. 南韓政府口罩庫存 API - https://app.swaggerhub.com/apis/Promptech/public-mask-info/20200307-oas3
+1. 藥局口罩採購地圖 - https://kiang.github.io/pharmacies/
+2. FtO - https://g0v.hackmd.io/@pm5/rJriRnlqE/%2FbpFogRpfRj-7QcTXnX5ZEw?type=book
+3. 南韓政府口罩庫存 API - https://app.swaggerhub.com/apis/Promptech/public-mask-info/20200307-oas3
 
 ## Datasets using by this project
 
