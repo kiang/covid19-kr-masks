@@ -29,6 +29,8 @@ function pointStyleFunction(f) {
     case 'empty':
       color = '#ccc';
       break;
+    default:
+      color = '#000';
   }
   return new ol.style.Style({
     image: new ol.style.RegularShape({
