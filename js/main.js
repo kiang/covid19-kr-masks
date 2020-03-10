@@ -16,16 +16,19 @@ function pointStyleFunction(f) {
     });
     radius = 15;
   }
-  if(p.updated === '') {
-    color = '#ccc';
-  } else if(p.remain_cnt > 100) {
-    color = '#48c774'; // > 50% stock
-  } else if(p.remain_cnt > 40) {
-    color = '#ffdd57'; // > 20% stock
-  } else if(p.remain_cnt > 20) {
-    color = '#fc82b1'; // > 10% stock
-  } else {
-    color = '#f00'; // < 10% stock, treat as 0
+  switch(p.remain_stat) {
+    case 'plenty':
+      color = '#48c774';
+      break;
+    case 'some':
+      color = '#ffdd57';
+      break;
+    case 'few':
+      color = '#f00';
+      break;
+    case 'empty':
+      color = '#ccc';
+      break;
   }
   return new ol.style.Style({
     image: new ol.style.RegularShape({
@@ -81,10 +84,23 @@ map.on('singleclick', function(evt) {
       message += '<tr><th scope="row" style="width: 100px;">Name</th><td>';
       message += p.name;
       message += '</td></tr>';
-      message += '<tr><th scope="row">Remain Count</th><td>' + p.remain_cnt + '</td></tr>';
-      message += '<tr><th scope="row">Sold Count</th><td>' + p.sold_cnt + '</td></tr>';
-      message += '<tr><th scope="row">Stock Count</th><td>' + p.stock_cnt + '</td></tr>';
-      message += '<tr><th scope="row">Stock Time</th><td>' + p.stock_t + '</td></tr>';
+      message += '<tr><th scope="row">Remain Status</th><td>';
+      switch(p.remain_stat) {
+        case 'plenty':
+          message += 'Plenty - 재고 상태[100개 이상(녹색)';
+          break;
+        case 'some':
+          message += 'Some - 30개 이상 100개미만(노랑색)';
+          break;
+        case 'few':
+          message += 'Few - 2개 이상 30개 미만(빨강색)';
+          break;
+        case 'empty':
+          message += 'Empty - 1개 이하(회색)';
+          break;
+      }
+      message += '</td></tr>';
+      message += '<tr><th scope="row">Stock Time</th><td>' + p.stock_at + '</td></tr>';
       message += '<tr><th scope="row">Type</th><td>' + p.type + '</td></tr>';
       message += '<tr><th scope="row">Address</th><td>' + p.addr + '</td></tr>';
       message += '<tr><th scope="row">Code</th><td>' + p.code + '</td></tr>';
