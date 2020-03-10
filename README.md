@@ -4,15 +4,15 @@
 
 (中文內容放在英文後面)
 
-I had built a Mask Map for Taiwan before(*1). The member of FtO(*2) in South Korea telling us that the government of South Korea planned to release real time stock information of face masks. Then I just tried to build the Mask Map for South Korea. As South Korea government provided a completed API(*3), it's easier for developers. I only have to deal with the interface and data.
+I had built a Mask Map for Taiwan before(*1). A member of FtO(*2) in South Korea told me that the government of South Korea is planning to release real-time inventory information of face masks. Then I started to build the Mask Map for South Korea. As the South Korea government provides a completed API(*3), it's easier for developers. I only have to deal with the interface and data.
 
 Mask Map for South Korea - https://kiang.github.io/covid19-kr-masks/
 
-By opening using browser, it will show an alert window to ask permission getting the position from your device. If you click to accept, the page will auto navigate you to where you are and show a blue circle to mark your position. Each triangle in the map represented a pharmacy or the point you could buy face masks. The color of triangle is showing the index of stock for face masks. Green means plenty, yellow = some, red = few, and grey means empty. Clicking the triangle will provide details of the pharmacy/point. Below the information you could find buttons providing navigation services by Google/Here WeGo/Bing. Clicking the button will bring you to each service guiding you how to get to the pharmacy/point.
+By opening the website, the browser will show an alert window to ask permission for the location information from your device. Please click accept and the map will navigate to your current location, which is marked with a blue circle. Each triangle in the map represents a pharmacy or a place you could buy face masks. The color of the triangle indicates how many face masks are left. Green means plenty, yellow means some, red means few, and grey means empty. Clicking on the triangle will provide details of the pharmacy/point. At the bottom of the information box, you could find buttons providing navigation services by Google/Here WeGo/Bing. Clicking the button will bring you to each service and it will guide you to the place.
 
-Clicking the gear icon in the sidebar you could get two drop down lists for provinces and cities. Each time you choose a location, the map will navigate you the the center of that province or city. Once the map be moved, the url will change following the center of the map. You could copy the full url to share the real time stock information with your friends.
+Clicking the gear icon in the sidebar, you could get two drop down lists for provinces and cities. Each time you choose a location, the map will navigate you to the center of that province or city. Once the map is moved, the URL will change according to the center of the map. You could copy the full URL to share the real-time stock information with your friends.
 
-The information is for reference only. It may not the same as the real number in the pharmacy/point. But with the map you could prevent wasting too much time finding the pharmacy/point to buy face masks.
+The information is for reference only. The accurate inventory is not guaranteed. But with the map, you could prevent wasting too much time traveling everywhere.
 
 #TaiwanCanHelp
 
