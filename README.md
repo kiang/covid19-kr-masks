@@ -8,7 +8,7 @@ I had built a Mask Map for Taiwan before(*1). The member of FtO(*2) in South Kor
 
 Mask Map for South Korea - https://kiang.github.io/covid19-kr-masks/
 
-By opening using browser, it will show an alert window to ask permission getting the position from your device. If you click to accept, the page will auto navigate you to where you are and show a blue circle to mark your position. Each triangle in the map represented a pharmacy or the point you could buy face masks. The color of triangle is showing the index of stock for face masks. Green means >100, yellow >40, pink >20, and red means the stock number is 20 or lower. Clicking the triangle will provide details of the pharmacy/point. Below the information you could find buttons providing navigation services by Google/Here WeGo/Bing. Clicking the button will bring you to each service guiding you how to get to the pharmacy/point.
+By opening using browser, it will show an alert window to ask permission getting the position from your device. If you click to accept, the page will auto navigate you to where you are and show a blue circle to mark your position. Each triangle in the map represented a pharmacy or the point you could buy face masks. The color of triangle is showing the index of stock for face masks. Green means plenty, yellow = some, red = few, and grey means empty. Clicking the triangle will provide details of the pharmacy/point. Below the information you could find buttons providing navigation services by Google/Here WeGo/Bing. Clicking the button will bring you to each service guiding you how to get to the pharmacy/point.
 
 Clicking the gear icon in the sidebar you could get two drop down lists for provinces and cities. Each time you choose a location, the map will navigate you the the center of that province or city. Once the map be moved, the url will change following the center of the map. You could copy the full url to share the real time stock information with your friends.
 
@@ -20,7 +20,7 @@ The information is for reference only. It may not the same as the real number in
 
 南韓口罩地圖 - https://kiang.github.io/covid19-kr-masks/
 
-透過瀏覽器開啟後一般會跳出提示，如果願意授權使用設備的位置，網頁會自動定位到行動裝置提供的地理點位，同時在地圖會以藍色圓點標記所在位置；藥局位置就是地圖中的三角形圖示，綠色代表口罩還有庫存(>100)、黃色表示庫存已經不多(>40)、粉紅表示庫存即將售完(>20)、紅色則是代表幾乎售完(<=20)，點選個別圖示後會顯示該地點的詳細資料，資料下方則是 Google / Here WeGo / Bing 等地圖應用提供的導航服務，點選後就會帶出個別地圖的路線導航。
+透過瀏覽器開啟後一般會跳出提示，如果願意授權使用設備的位置，網頁會自動定位到行動裝置提供的地理點位，同時在地圖會以藍色圓點標記所在位置；藥局位置就是地圖中的三角形圖示，綠色代表口罩庫存充裕、黃色表示庫存開始吃緊、紅色表示庫存即將售完、灰色則是代表已經售完，點選個別圖示後會顯示該地點的詳細資料，資料下方則是 Google / Here WeGo / Bing 等地圖應用提供的導航服務，點選後就會帶出個別地圖的路線導航。
 
 點選右邊選單的齒輪圖示會看到兩個下拉選單，包含省份與城市，每次選擇一個項目地圖就會自動導引你到這個省份或城市的中間點；地圖的中心點變動時網址會跟著改變，你可以直接把網址複製給朋友來分享這個地方的口罩庫存資訊。
 
@@ -38,6 +38,7 @@ The information is for reference only. It may not the same as the real number in
 ## Credits
 
 1. Most of the information was provided by [FtO](https://g0v.hackmd.io/@pm5/rJriRnlqE/%2FbpFogRpfRj-7QcTXnX5ZEw?type=book) members in South Korea
+2. Find more information at https://hackmd.io/@6VWj8d9yQkKavs-wIUuzLQ/ry5TAjZr8
 
 ## Notices
 
