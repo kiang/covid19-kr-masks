@@ -1,7 +1,8 @@
 openapi: 3.0.0
 info:
   title: 공적 마스크 판매 현황 조회 API
-  description: 공적마스크 판매처 및 재고 현황 조회 API 서비스<br/>https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1
+  description: 공적마스크 판매처 및 재고 현황 조회 API 서비스<br/>https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1<br/>수량
+    상태정보를 색상으로 표시할 경우 녹색(100개 이상)/노랑색(30~99개)/빨강색(2~29개)/회색(0~1개)을 준수해주시기 바랍니다.
   version: 20200307-oas3
 servers:
 - url: https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1
@@ -10,7 +11,7 @@ paths:
     get:
       tags:
       - v1
-      description: 약국, 우체국, 농협 등의 마스크 판매처 정보 제공 (마스크 수랑 관련 정보는 제공하지 않음)
+      description: 약국, 우체국, 농협 등의 마스크 판매처 정보 제공 (마스크 재고 관련 정보는 제공하지 않음)
       parameters:
       - name: page
         in: query
@@ -32,7 +33,7 @@ paths:
     get:
       tags:
       - v1
-      description: 마스크 잔여 수랑 등의 판매 정보 제공(판매처 관련 정보는 제공하지 않음)
+      description: 마스크 재고 상태 등의 판매 정보 제공(판매처 관련 정보는 제공하지 않음)
       parameters:
       - name: page
         in: query
@@ -54,7 +55,7 @@ paths:
     get:
       tags:
       - v1
-      description: 중심 좌표(위/경도)를 기준으로 반경(미터단위) 안에 존재하는 판매처 및 마스크 수량 정보 제공
+      description: 중심 좌표(위/경도)를 기준으로 반경(미터단위) 안에 존재하는 판매처 및 재고 상태 등의 판매 정보 제공
       parameters:
       - name: lat
         in: query
@@ -90,6 +91,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StoreSaleResult'
+  /storesByAddr/json:
+    get:
+      tags:
+      - v1
+      description: 주소를 기준으로 해당 구 또는 동내에 존재하는 판매처 및 재고 상태 등의 판매 정보 제공.<br/> 예- '서울특별시
+        강남구' or '서울특별시 강남구 논현동'<br/> ('서울특별시' 와 같이 '시'단위만 입력하는 것은 불가능합니다.)
+      parameters:
+      - name: address
+        in: query
+        description: 검색 기준이 될 주소
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: default
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreSaleResult'
 components:
   schemas:
     Store:
@@ -99,6 +122,7 @@ components:
       - lat
       - lng
       - name
+      - type
       properties:
         code:
           type: string
@@ -109,6 +133,9 @@ components:
         addr:
           type: string
           description: 주소
+        type:
+          type: string
+          description: '판매처 유형[약국: ''01'', 우체국: ''02'', 농협: ''03'']'
         lat:
           type: number
           description: 위도
@@ -121,31 +148,20 @@ components:
       required:
       - code
       - created_at
-      - remain_cnt
-      - sold_cnt
-      - sold_out
-      - stock_cnt
-      - stock_t
+      - remain_stat
+      - stock_at
       properties:
         code:
           type: string
           description: 식별 코드
-        stock_t:
+        stock_at:
           type: string
           description: 입고시간
-          format: HH:mm
-        stock_cnt:
-          type: integer
-          description: 입고 수량
-        sold_cnt:
-          type: integer
-          description: 판매 수량
-        remain_cnt:
-          type: integer
-          description: 재고 수량
-        sold_out:
-          type: boolean
-          description: 완판 여부(true 일경우 판매 종료)
+          format: YYYY/MM/DD HH:mm:ss
+        remain_stat:
+          type: string
+          description: '재고 상태[100개 이상(녹색): ''plenty'' / 30개 이상 100개미만(노랑색): ''some''
+            / 2개 이상 30개 미만(빨강색): ''few'' / 1개 이하(회색): ''empty'']'
         created_at:
           type: string
           description: 데이터 생성 일자
@@ -158,11 +174,8 @@ components:
       - lat
       - lng
       - name
-      - remain_cnt
-      - sold_cnt
-      - sold_out
-      - stock_cnt
-      - stock_t
+      - remain_stat
+      - stock_at
       - type
       properties:
         code:
@@ -174,6 +187,9 @@ components:
         addr:
           type: string
           description: 주소
+        type:
+          type: string
+          description: '판매처 유형[약국: ''01'', 우체국: ''02'', 농협: ''03'']'
         lat:
           type: number
           description: 위도
@@ -182,22 +198,14 @@ components:
           type: number
           description: 경도
           format: float
-        stock_t:
+        stock_at:
           type: string
           description: 입고시간
-          format: HH:mm
-        stock_cnt:
-          type: integer
-          description: 입고 수량
-        sold_cnt:
-          type: integer
-          description: 판매 수량
-        remain_cnt:
-          type: integer
-          description: 재고 수량
-        sold_out:
-          type: boolean
-          description: 완판 여부(true 일경우 판매 종료)
+          format: YYYY/MM/DD HH:mm:ss
+        remain_stat:
+          type: string
+          description: '재고 상태[100개 이상(녹색): ''plenty'' / 30개 이상 100개미만(노랑색): ''some''
+            / 2개 이상 30개 미만(빨강색): ''few'' / 1개 이하(회색): ''empty'']'
         created_at:
           type: string
           description: 데이터 생성 일자
