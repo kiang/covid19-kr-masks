@@ -1,3 +1,7 @@
+if('localhost' !== location.hostname && location.protocol !== 'https:') {
+  location.replace(`https:${location.href.substring(location.protocol.length)}`);
+}
+
 var sidebar = new ol.control.Sidebar({ element: 'sidebar', position: 'right' });
 
 function pointStyleFunction(f) {
