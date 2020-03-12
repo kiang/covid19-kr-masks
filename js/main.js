@@ -113,6 +113,7 @@ map.on('singleclick', function(evt) {
       message += '<tr><th scope="row">Created At</th><td>' + p.created_at + '</td></tr>';
       message += '<tr><td colspan="2">';
       message += '<hr /><div class="btn-group-vertical" role="group" style="width: 100%;">';
+      message += '<a href="//map.kakao.com/link/map/' + p.name + ',' + p.lat + ',' + p.lng + '" target="_blank" class="btn btn-info btn-lg btn-block">Kakao</a>';
       message += '<a href="http://map.naver.com/?eText=' + p.name + '&elng=' + p.lng + '&elat=' + p.lat + '" target="_blank" class="btn btn-info btn-lg btn-block">Naver</a>';
       message += '<a href="https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lng + '&travelmode=driving" target="_blank" class="btn btn-info btn-lg btn-block">Google</a>';
       message += '<a href="https://wego.here.com/directions/drive/mylocation/' + p.lng + ',' + p.lat + '" target="_blank" class="btn btn-info btn-lg btn-block">Here WeGo</a>';
